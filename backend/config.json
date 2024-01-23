@@ -9,8 +9,8 @@
           "name": "manager",
           "username": "testePratico",
           "password": "dev123456",
-          "hostname": "127.0.0.1",
-          "port": "5441",
+          "hostname": "database",
+          "port": "5432",
           "max_conn": 5,
           "max_idle": 1,
           "transaction_timeout": 1
