@@ -1,0 +1,459 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Esse e um teste pratico para a vaga Flutter/Golang da empresa VR SOFTWARE.",
+        "title": "TESTE PRATICO FLUTTER/GOLANG API",
+        "contact": {
+            "name": "Vr Software"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/course/add-students": {
+            "post": {
+                "description": "Add students to a course.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Add students to a course",
+                "operationId": "add-students",
+                "parameters": [
+                    {
+                        "description": "Student information",
+                        "name": "student",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateCourseStudent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        },
+        "/course/create": {
+            "post": {
+                "description": "Create a new course with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Create a new course",
+                "operationId": "create-course",
+                "parameters": [
+                    {
+                        "description": "Course data to create",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateCourseRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/course/list": {
+            "get": {
+                "description": "Get a list of courses with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course"
+                ],
+                "summary": "List courses",
+                "operationId": "list-courses",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit the number of results (default is 10)",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset for pagination",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/course.Pagination"
+                        }
+                    }
+                }
+            }
+        },
+        "/course/list-students": {
+            "get": {
+                "description": "Get a list of students in a course",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course"
+                ],
+                "summary": "List students in a course",
+                "operationId": "list-students-in-course",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Codigo do curso",
+                        "name": "search",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/course.ListStudentCourse"
+                        }
+                    }
+                }
+            }
+        },
+        "/course/update": {
+            "patch": {
+                "description": "Update an existing course with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course"
+                ],
+                "summary": "Update a course",
+                "operationId": "update-course",
+                "parameters": [
+                    {
+                        "description": "Course data to update",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UpdateCourseRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/student/create": {
+            "post": {
+                "description": "Create a new student with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Create a new student",
+                "operationId": "create-student",
+                "parameters": [
+                    {
+                        "description": "Student data to create",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateStudentRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/student/list": {
+            "get": {
+                "description": "Get a list of students with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Student"
+                ],
+                "summary": "List students",
+                "operationId": "list-students",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit the number of results (default is 10)",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset for pagination",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/student.Pagination"
+                        }
+                    }
+                }
+            }
+        },
+        "/student/update": {
+            "patch": {
+                "description": "Update an existing student with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Update a student",
+                "operationId": "update-student",
+                "parameters": [
+                    {
+                        "description": "Student data to update",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UpdateStudentRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "course.Course": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "ementa": {
+                    "type": "string"
+                }
+            }
+        },
+        "course.ListStudentCourse": {
+            "type": "object",
+            "properties": {
+                "student": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/course.Student"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "course.Pagination": {
+            "type": "object",
+            "properties": {
+                "courses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/course.Course"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "course.Student": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CreateCourseRequestBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "ementa"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "ementa": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CreateCourseStudent": {
+            "type": "object",
+            "required": [
+                "code_course",
+                "code_student"
+            ],
+            "properties": {
+                "code_course": {
+                    "type": "integer"
+                },
+                "code_student": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dtos.CreateStudentRequestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.UpdateCourseRequestBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "ementa"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "ementa": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.UpdateStudentRequestBody": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "student.Pagination": {
+            "type": "object",
+            "properties": {
+                "students": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/student.Student"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "student.Student": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

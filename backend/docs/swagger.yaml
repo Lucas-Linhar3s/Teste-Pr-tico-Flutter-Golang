@@ -1,0 +1,302 @@
+basePath: /
+definitions:
+  course.Course:
+    properties:
+      code:
+        type: integer
+      description:
+        type: string
+      ementa:
+        type: string
+    type: object
+  course.ListStudentCourse:
+    properties:
+      student:
+        items:
+          $ref: '#/definitions/course.Student'
+        type: array
+      total:
+        type: integer
+    type: object
+  course.Pagination:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/course.Course'
+        type: array
+      total:
+        type: integer
+    type: object
+  course.Student:
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+    type: object
+  dtos.CreateCourseRequestBody:
+    properties:
+      description:
+        type: string
+      ementa:
+        type: string
+    required:
+    - description
+    - ementa
+    type: object
+  dtos.CreateCourseStudent:
+    properties:
+      code_course:
+        type: integer
+      code_student:
+        type: integer
+    required:
+    - code_course
+    - code_student
+    type: object
+  dtos.CreateStudentRequestBody:
+    properties:
+      name:
+        type: string
+    type: object
+  dtos.UpdateCourseRequestBody:
+    properties:
+      code:
+        type: integer
+      description:
+        type: string
+      ementa:
+        type: string
+    required:
+    - description
+    - ementa
+    type: object
+  dtos.UpdateStudentRequestBody:
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+    type: object
+  student.Pagination:
+    properties:
+      students:
+        items:
+          $ref: '#/definitions/student.Student'
+        type: array
+      total:
+        type: integer
+    type: object
+  student.Student:
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    name: Vr Software
+  description: Esse e um teste pratico para a vaga Flutter/Golang da empresa VR SOFTWARE.
+  title: TESTE PRATICO FLUTTER/GOLANG API
+  version: "1.0"
+paths:
+  /course/add-students:
+    post:
+      consumes:
+      - application/json
+      description: Add students to a course.
+      operationId: add-students
+      parameters:
+      - description: Student information
+        in: body
+        name: student
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateCourseStudent'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No content
+      summary: Add students to a course
+      tags:
+      - Course
+  /course/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new course with the provided data
+      operationId: create-course
+      parameters:
+      - description: Course data to create
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateCourseRequestBody'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+      summary: Create a new course
+      tags:
+      - Course
+  /course/list:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of courses with pagination
+      operationId: list-courses
+      parameters:
+      - description: Limit the number of results (default is 10)
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: Search term
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/course.Pagination'
+      summary: List courses
+      tags:
+      - Course
+  /course/list-students:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of students in a course
+      operationId: list-students-in-course
+      parameters:
+      - description: Codigo do curso
+        in: query
+        name: search
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/course.ListStudentCourse'
+      summary: List students in a course
+      tags:
+      - Course
+  /course/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing course with the provided data
+      operationId: update-course
+      parameters:
+      - description: Course data to update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateCourseRequestBody'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+      summary: Update a course
+      tags:
+      - Course
+  /student/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new student with the provided data
+      operationId: create-student
+      parameters:
+      - description: Student data to create
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateStudentRequestBody'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+      summary: Create a new student
+      tags:
+      - Student
+  /student/list:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of students with pagination
+      operationId: list-students
+      parameters:
+      - description: Limit the number of results (default is 10)
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: Search term
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/student.Pagination'
+      summary: List students
+      tags:
+      - Student
+  /student/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing student with the provided data
+      operationId: update-student
+      parameters:
+      - description: Student data to update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateStudentRequestBody'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+      summary: Update a student
+      tags:
+      - Student
+swagger: "2.0"
