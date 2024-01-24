@@ -5,7 +5,7 @@ FROM golang:latest
 WORKDIR /app
 
 # Copy the local package files to the container's workspace
-COPY backend /app
+COPY . /app
 
 # Build the Go application
 RUN go build -o main ./main.go
