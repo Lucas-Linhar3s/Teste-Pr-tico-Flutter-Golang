@@ -34,7 +34,7 @@ O frontend foi desenvolvido em Flutter, utilizando `flutter_modular` e `mobx` pa
 Para rodar o projeto, utilize o Docker Compose na pasta raiz do projeto:
 
 ```bash
-docker-compose up
+docker-compose up --build
 
 Este comando iniciará tanto o backend quanto o frontend, disponibilizando a aplicação completa.
 

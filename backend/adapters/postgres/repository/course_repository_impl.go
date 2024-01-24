@@ -89,6 +89,7 @@ func (r *courseRepositoryImpl) ListCourses(params *dtos.RequestPagination) (pagi
 				When(sq.Eq{"descricao": ""}, sq.Expr("true")).
 				Else(sq.ILike{"descricao": fmt.Sprintf("%%%s%%", *params.Search)}),
 		).
+		OrderBy("codigo").
 		Limit(uint64(*params.Limit)).
 		Offset(uint64(*params.Offset)).
 		Query(); err != nil {

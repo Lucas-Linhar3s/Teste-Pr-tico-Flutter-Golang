@@ -1,5 +1,4 @@
 -- init.sql
-
 -- Criação da tabela "cursos"
 CREATE TABLE IF NOT EXISTS public.curso (
     codigo SERIAL PRIMARY KEY,

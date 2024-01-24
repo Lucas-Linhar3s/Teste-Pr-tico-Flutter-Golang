@@ -47,6 +47,7 @@ func (r *studentRepositoryImpl) ListStudents(params *dtos.RequestPagination) (pa
 				When(sq.Eq{"nome": ""}, sq.Expr("true")).
 				Else(sq.ILike{"unaccent(nome)": fmt.Sprintf("%%%s%%", *params.Search)}),
 		).
+		OrderBy("codigo").
 		Limit(uint64(*params.Limit)).
 		Offset(uint64(*params.Offset)).
 		Query(); err != nil {
