@@ -1,15 +1,24 @@
-Projeto de Teste Prático - Golang/Flutter
+Peço desculpas pela confusão. Aqui está uma versão formatada para o README.md do Git:
+
+markdown
+Copy code
+# Projeto de Teste Prático - Golang/Flutter
+
 Este projeto é um teste prático para avaliar as habilidades de programação em Golang e Flutter. O backend foi desenvolvido utilizando o framework Gin para o servidor, Swaggo para a documentação e PostgreSQL como banco de dados. Já o frontend foi implementado em Flutter, utilizando MobX para gerenciamento de estado, Dio para consumo de API, e Clean Architecture em ambas as partes.
 
-Backend
-Requisitos
-Docker
-Docker Compose
-Golang
-Instruções para execução
-Navegue até o diretório backend.
-bash
-Copy code
+## Backend
+
+### Requisitos
+
+- Docker
+- Docker Compose
+- Golang
+
+### Instruções para execução
+
+1. Navegue até o diretório `backend`.
+
+```bash
 cd backend
 Execute o seguinte comando para construir e iniciar o servidor utilizando o Docker Compose.
 bash
