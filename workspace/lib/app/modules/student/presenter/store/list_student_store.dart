@@ -46,9 +46,7 @@ abstract class _ListStudentStoreBase with Store {
     if (listStudent.isEmpty) {
       loading = false;
     }
-    print("chamou");
     listStudent.insert(0, StudentEntity(Name: '', Code: 0));
-    print(listStudent);
     return listStudent;
   }
 

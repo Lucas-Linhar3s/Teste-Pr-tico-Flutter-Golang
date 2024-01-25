@@ -2,7 +2,6 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workspace/app/modules/student/presenter/store/create_student_store.dart';
 import 'package:workspace/app/modules/student/presenter/store/list_student_store.dart';
 import 'package:workspace/app/modules/student/presenter/store/update_student_store.dart';
