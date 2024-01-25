@@ -164,9 +164,9 @@ class ModalEditCourse {
                                               type: CoolAlertType.success,
                                               title: "Curso editado",
                                               onConfirmBtnTap: () {
+                                                Modular.to.canPop();
                                                 listCourseStore.listAll();
                                               },
-                                              closeOnConfirmBtnTap: true,
                                             );
                                           } else {
                                             await CoolAlert.show(
@@ -174,7 +174,9 @@ class ModalEditCourse {
                                               context: context,
                                               type: CoolAlertType.error,
                                               title: "Erro ao editar curso",
-                                              closeOnConfirmBtnTap: true,
+                                              onConfirmBtnTap: () {
+                                                Modular.to.canPop();
+                                              },
                                             );
                                           }
                                         },

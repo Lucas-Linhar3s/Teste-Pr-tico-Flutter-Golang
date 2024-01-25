@@ -97,12 +97,12 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Icon(Icons.person_4_outlined),
                                 ),
-                                trailing: Tooltip(
-                                    message: "Salvar",
-                                    child: Observer(
-                                      builder: (_) {
-                                        return widget.store.enable == index
-                                            ? ElevatedButton(
+                                trailing: Observer(
+                                  builder: (_) {
+                                    return widget.store.enable == index
+                                        ? Tooltip(
+                                            message: "Salvar",
+                                            child: ElevatedButton(
                                                 onPressed: widget
                                                             .createStudentStore
                                                             .name
@@ -220,8 +220,11 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                                                   213, 223, 106)
                                                               : const Color(
                                                                   0xff2ecc71)),
-                                                ))
-                                            : ElevatedButton(
+                                                )),
+                                          )
+                                        : Tooltip(
+                                            message: "Editar",
+                                            child: ElevatedButton(
                                                 onPressed: widget
                                                             .store.editing ||
                                                         widget.store.enable !=
@@ -275,9 +278,10 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                                                   164, 189, 199)
                                                               : const Color(
                                                                   0xff87ceeb)),
-                                                ));
-                                      },
-                                    )),
+                                                )),
+                                          );
+                                  },
+                                ),
                               );
                             },
                           ),

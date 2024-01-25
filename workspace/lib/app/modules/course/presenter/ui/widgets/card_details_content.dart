@@ -125,52 +125,42 @@ class _CardDetailsContentState extends State<CardDetailsContent> {
                             : 900,
                         height: screenWidth < fullHdBreakpointWidth ? 160 : 345,
                         child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                  width: screenWidth < fullHdBreakpointWidth
-                                      ? screenWidth
-                                      : 900,
-                                  height: 400,
-                                  child: ListView.separated(
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Card(
-                                        elevation: 2,
-                                        color: Colors.white,
-                                        borderOnForeground: true,
-                                        child: Observer(
-                                          builder: (_) {
-                                            return ListTile(
-                                              title: Text(
-                                                widget
-                                                    .listCourseStore
-                                                    .listStudentCourse[index]
-                                                    .Name,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              subtitle: Text(
-                                                  "Matricula: ${widget.listCourseStore.listStudentCourse[index].Code}"),
-                                              leading: const Padding(
-                                                padding: EdgeInsets.all(10.0),
-                                                child:
-                                                    Icon(Icons.person_outline),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (_, __) =>
-                                        const Divider(),
-                                    itemCount: widget.listCourseStore
-                                        .listStudentCourse.length,
-                                  )),
-                            ],
-                          ),
+                          child: SizedBox(
+                              width: screenWidth < fullHdBreakpointWidth
+                                  ? screenWidth
+                                  : 900,
+                              height: 400,
+                              child: ListView.separated(
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Card(
+                                    elevation: 2,
+                                    color: Colors.white,
+                                    borderOnForeground: true,
+                                    child: Observer(
+                                      builder: (_) {
+                                        return ListTile(
+                                          title: Text(
+                                            widget.listCourseStore
+                                                .listStudentCourse[index].Name,
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          subtitle: Text(
+                                              "Matricula: ${widget.listCourseStore.listStudentCourse[index].Code}"),
+                                          leading: const Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Icon(Icons.person_outline),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (_, __) => const Divider(),
+                                itemCount: widget
+                                    .listCourseStore.listStudentCourse.length,
+                              )),
                         ),
                       )
                     ])));
