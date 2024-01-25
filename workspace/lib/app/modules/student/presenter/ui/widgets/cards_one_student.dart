@@ -35,8 +35,10 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
     return Observer(
       builder: (_) {
         return widget.store.loading
-            ? const Padding(
-                padding: EdgeInsets.only(top: 260.0),
+            ? Padding(
+                padding: EdgeInsets.only(
+                  top: 260.0,
+                ),
                 child: CircularProgressIndicator.adaptive(),
               )
             : Padding(
@@ -145,6 +147,8 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                                                 widget.store
                                                                     .listAll();
                                                               },
+                                                              closeOnConfirmBtnTap:
+                                                                  true,
                                                             );
                                                           } else {
                                                             await CoolAlert
@@ -156,10 +160,8 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                                                       .error,
                                                               title:
                                                                   "Erro ao editar aluno",
-                                                              onConfirmBtnTap:
-                                                                  () => Modular
-                                                                      .to
-                                                                      .pop(),
+                                                              closeOnConfirmBtnTap:
+                                                                  true,
                                                             );
                                                           }
                                                         } else {
@@ -191,22 +193,21 @@ class _CardsOneStudentState extends State<CardsOneStudent> {
                                                                 widget.store
                                                                     .listAll();
                                                               },
+                                                              closeOnConfirmBtnTap:
+                                                                  true,
                                                             );
                                                           } else {
-                                                            await CoolAlert
-                                                                .show(
-                                                              width: 500,
-                                                              context: context,
-                                                              type:
-                                                                  CoolAlertType
-                                                                      .error,
-                                                              title:
-                                                                  "Erro ao cadastrar aluno",
-                                                              onConfirmBtnTap:
-                                                                  () => Modular
-                                                                      .to
-                                                                      .pop(),
-                                                            );
+                                                            await CoolAlert.show(
+                                                                width: 500,
+                                                                context:
+                                                                    context,
+                                                                type:
+                                                                    CoolAlertType
+                                                                        .error,
+                                                                title:
+                                                                    "Erro ao cadastrar aluno",
+                                                                closeOnConfirmBtnTap:
+                                                                    true);
                                                           }
                                                         }
                                                       },

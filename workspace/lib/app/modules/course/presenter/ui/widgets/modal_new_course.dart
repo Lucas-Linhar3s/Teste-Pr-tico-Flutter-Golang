@@ -160,9 +160,9 @@ class ModalNewCourse {
                                               type: CoolAlertType.success,
                                               title: "Curso cadastrado",
                                               onConfirmBtnTap: () {
-                                                Modular.to.canPop();
                                                 listCourseStore.listAll();
                                               },
+                                              closeOnConfirmBtnTap: true,
                                             );
                                           } else {
                                             await CoolAlert.show(
@@ -170,9 +170,7 @@ class ModalNewCourse {
                                               context: context,
                                               type: CoolAlertType.error,
                                               title: "Erro ao cadastrar curso",
-                                              onConfirmBtnTap: () {
-                                                Modular.to.canPop();
-                                              },
+                                              closeOnConfirmBtnTap: true,
                                             );
                                           }
                                         },

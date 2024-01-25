@@ -41,6 +41,7 @@ dependencies:
   dio: ^5.4.0
   build_runner: ^2.4.8
   flutter_secure_storage: ^4.2.1
+  flutter_secure_storage_windows: ^3.0.0
   cool_alert: ^2.0.1
 
 dev_dependencies:

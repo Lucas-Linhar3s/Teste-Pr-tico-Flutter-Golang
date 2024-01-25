@@ -43,6 +43,15 @@ A documentação da API pode ser acessada através do Swagger. Após iniciar o s
 
 http://localhost:8080/swagger/index.html
 
+### Depois de rodar o backend e ja estiver configurado 
+
+    - Entre na pasta workspace
+```bash cd backend```
+
+    - Inicie o frontend em modo release para melhor experiencia
+```bash flutter run --release```
+
+
 ### Frontend
 
 ### Requisitos
@@ -53,9 +62,8 @@ http://localhost:8080/swagger/index.html
  - Navegue até o diretório frontend/workspace.
  ```bash cd frontend/workspace```
 
-Abra o arquivo main.dart em sua IDE.
-
-Pressione F5 para iniciar a aplicação Flutter.
+    - Inicie o frontend em modo release para melhor experiencia
+```bash flutter run --release```
 
 Isso iniciará o frontend, onde você poderá interagir com a aplicação desenvolvida. O MobX será responsável pelo gerenciamento de estado, e o Dio será utilizado para consumir a API do backend.
 

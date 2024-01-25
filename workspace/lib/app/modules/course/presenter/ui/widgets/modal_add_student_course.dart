@@ -117,11 +117,11 @@ class ModalAddStudentCourse {
                                                 title:
                                                     "Aluno cadastrado no curso",
                                                 onConfirmBtnTap: () {
-                                                  Modular.to.canPop();
                                                   listCourseStore
                                                       .listAllStudent(
                                                           codeCourse);
                                                 },
+                                                closeOnConfirmBtnTap: true,
                                               );
                                             } else {
                                               await CoolAlert.show(
@@ -130,9 +130,7 @@ class ModalAddStudentCourse {
                                                 type: CoolAlertType.error,
                                                 title:
                                                     "Erro ao cadastrar aluno no curso",
-                                                onConfirmBtnTap: () {
-                                                  Modular.to.canPop();
-                                                },
+                                                closeOnConfirmBtnTap: true,
                                               );
                                             }
                                           },

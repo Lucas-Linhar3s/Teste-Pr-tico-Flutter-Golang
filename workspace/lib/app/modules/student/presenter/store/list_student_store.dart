@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage_windows/flutter_secure_storage_windows.dart';
 import 'package:mobx/mobx.dart';
 import 'package:workspace/app/modules/student/domain/entities/student_entity.dart';
 import 'package:workspace/app/modules/student/domain/exceptions/exception.dart';
 import 'package:workspace/app/modules/student/domain/usecases/list_student/i_list_student.dart';
-import 'package:workspace/app/modules/student/infrastructure/adapters/student_adapter.dart';
 part 'list_student_store.g.dart';
 
 class ListStudentStore = _ListStudentStoreBase with _$ListStudentStore;
@@ -20,8 +22,6 @@ abstract class _ListStudentStoreBase with Store {
 
   @observable
   List<StudentEntity> listStudent = [];
-
-  List<Map<String, dynamic>> listMap = [];
 
   @observable
   String errorMessage = '';
@@ -43,18 +43,21 @@ abstract class _ListStudentStoreBase with Store {
 
   @action
   List<StudentEntity> addNewRow() {
-    listMap.insert(0, {
-      'name': '',
-      'code': 0,
-    });
-    listStudent.insert(0, StudentAdapter.fromListToJson(listMap).first);
+    if (listStudent.isEmpty) {
+      loading = false;
+    }
+    print("chamou");
+    listStudent.insert(0, StudentEntity(Name: '', Code: 0));
+    print(listStudent);
     return listStudent;
   }
 
   @action
   removeRow(int index) {
-    listMap.removeAt(index);
     listStudent.removeAt(index);
+    if (listStudent.isEmpty) {
+      loading = true;
+    }
   }
 
   @action
@@ -68,7 +71,7 @@ abstract class _ListStudentStoreBase with Store {
     } on StudentException catch (e) {
       errorMessage = e.message;
     }
-    return List.empty();
+    return listStudent;
   }
 
   @action
@@ -83,29 +86,49 @@ abstract class _ListStudentStoreBase with Store {
     } on StudentException catch (e) {
       errorMessage = e.message;
     }
-    return List.empty();
+    return listStudent;
   }
 
   @action
   setSelectedSharedPreferences(int value) async {
-    final secureStorage = FlutterSecureStorage();
-    await secureStorage.write(key: 'PageView', value: value.toString());
-    selected = value;
+    if (Platform.isLinux) {
+      final secureStorage = FlutterSecureStorage();
+      await secureStorage.write(key: 'PageView', value: value.toString());
+      selected = value;
+    } else {
+      var flutterSecureStorageWindowsPlugin = FlutterSecureStorageWindows();
+      await flutterSecureStorageWindowsPlugin
+          .write(key: 'PageView', value: value.toString(), options: {});
+      selected = value;
+    }
   }
 
   @action
   getSelectedSharedPreferences() async {
-    final secureStorage = FlutterSecureStorage();
-    String? storedValue = await secureStorage.read(key: 'PageView');
-    int retrievedValue = int.tryParse(storedValue ?? '') ?? 0;
-    selected = retrievedValue;
-    return selected;
+    if (Platform.isLinux) {
+      final secureStorage = FlutterSecureStorage();
+      String? storedValue = await secureStorage.read(key: 'PageView');
+      int retrievedValue = int.tryParse(storedValue ?? '') ?? 0;
+      selected = retrievedValue;
+    } else {
+      var flutterSecureStorageWindowsPlugin = FlutterSecureStorageWindows();
+      String? storedValue = await flutterSecureStorageWindowsPlugin
+          .read(key: 'PageView', options: {});
+      int retrievedValue = int.tryParse(storedValue ?? '') ?? 0;
+      selected = retrievedValue;
+    }
   }
 
   @action
   removeSelectedSharedPreferences() async {
-    final secureStorage = FlutterSecureStorage();
-    secureStorage.delete(key: "PageView");
-    selected = null;
+    if (Platform.isLinux) {
+      final secureStorage = FlutterSecureStorage();
+      secureStorage.delete(key: "PageView");
+      selected = null;
+    } else {
+      var flutterSecureStorageWindowsPlugin = FlutterSecureStorageWindows();
+      flutterSecureStorageWindowsPlugin.delete(key: "PageView", options: {});
+      selected = null;
+    }
   }
 }
