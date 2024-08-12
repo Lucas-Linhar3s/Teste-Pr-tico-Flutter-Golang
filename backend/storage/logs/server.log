@@ -1,0 +1,372 @@
+2024-08-12 15:16:36.312423538	[31mfatal[0m	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36	failed to open database	{"error": "ERRO: erro de sintaxe em ou próximo a \"..\" (SQLSTATE 42601)"}
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database.NewDatabase
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces.Routes
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces/routes.go:20
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses.Module
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/courses_module.go:45
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.Modules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/modules.go:13
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.RegisterDI.func1
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/config_di.go:17
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig.ResgisterModules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig/config_dig.go:22
+main.main
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/cmd/server/main.go:51
+runtime.main
+	/usr/local/go/src/runtime/proc.go:271
+2024-08-12 15:17:40.934573682	[31mfatal[0m	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36	failed to open database	{"error": "ERRO: erro de sintaxe em ou próximo a \"IF\" (SQLSTATE 42601)"}
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database.NewDatabase
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces.Routes
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces/routes.go:20
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses.Module
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/courses_module.go:45
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.Modules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/modules.go:13
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.RegisterDI.func1
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/config_di.go:17
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig.ResgisterModules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig/config_dig.go:22
+main.main
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/cmd/server/main.go:51
+runtime.main
+	/usr/local/go/src/runtime/proc.go:271
+2024-08-12 15:19:15.239400083	[31mfatal[0m	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36	failed to open database	{"error": "ERRO: não existe a relação \"aluno\" (SQLSTATE 42P01)"}
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database.NewDatabase
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces.Routes
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces/routes.go:20
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses.Module
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/courses_module.go:45
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.Modules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/modules.go:13
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.RegisterDI.func1
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/config_di.go:17
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig.ResgisterModules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig/config_dig.go:22
+main.main
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/cmd/server/main.go:51
+runtime.main
+	/usr/local/go/src/runtime/proc.go:271
+2024-08-12 15:21:49.956642340	[31mfatal[0m	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36	failed to open database	{"error": "ERRO: não existe a relação \"curso_aluno\" (SQLSTATE 42P01)"}
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database.NewDatabase
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database/database.go:36
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:155
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramObjectField.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:485
+go.uber.org/dig.paramObject.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:413
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces.Routes
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces/routes.go:20
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses.Module
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/courses_module.go:45
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.Modules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/modules.go:13
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di.RegisterDI.func1
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di/config_di.go:17
+reflect.Value.call
+	/usr/local/go/src/reflect/value.go:596
+reflect.Value.Call
+	/usr/local/go/src/reflect/value.go:380
+go.uber.org/dig.defaultInvoker
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/container.go:257
+go.uber.org/dig.(*constructorNode).Call
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/constructor.go:187
+go.uber.org/dig.paramSingle.Build
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:288
+go.uber.org/dig.paramList.BuildList
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/param.go:151
+go.uber.org/dig.(*Scope).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:123
+go.uber.org/dig.(*Container).Invoke
+	/home/lucas/go/pkg/mod/go.uber.org/dig@v1.18.0/invoke.go:83
+github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig.ResgisterModules
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig/config_dig.go:22
+main.main
+	/home/lucas/src/github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/cmd/server/main.go:51
+runtime.main
+	/usr/local/go/src/runtime/proc.go:271

@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -96,9 +95,10 @@ func open(c *config.Config) (database *Database, err error) {
 	} else {
 		panic("unknown db driver")
 	}
-	// if err := createTables(db); err != nil {
-	// 	return nil, err
-	// }
+
+	if err = createTables(db); err != nil {
+		return nil, err
+	}
 
 	if err := db.Ping(); err != nil {
 		return nil, err
@@ -116,20 +116,24 @@ func open(c *config.Config) (database *Database, err error) {
 }
 
 func createTables(db *sql.DB) error {
-	currentDir, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	path := filepath.Join(currentDir, "", "../../database/schema.sql")
-	// Ler o arquivo schema.sql
-	sqlFile, err := ioutil.ReadFile(path)
+	_, err := db.Exec(string(createTablesInitial))
 	if err != nil {
 		return err
 	}
 
-	_, err = db.Exec(string(sqlFile))
-	if err != nil {
-		return err
+	res, err := db.Query("SELECT COUNT(*) FROM manager.curso")
+	defer res.Close()
+	for res.Next() {
+		var count int
+		if err = res.Scan(&count); err != nil {
+			return err
+		}
+		if count == 0 {
+			_, err = db.Exec(string(insertTablesInitial))
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return err

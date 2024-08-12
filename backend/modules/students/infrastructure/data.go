@@ -18,7 +18,7 @@ type PGStudent struct {
 // CreateStudent creates a new student
 func (r *PGStudent) CreateStudent(student *StudentModel) (err error) {
 	if _, err = r.Db.Builder.
-		Insert("aluno").
+		Insert("manager.aluno").
 		Columns("nome").
 		Values(student.Name).
 		Exec(); err != nil {
@@ -39,7 +39,7 @@ func (r *PGStudent) ListStudents(params map[string]interface{}) (pagination *[]S
 	if rows, err = r.Db.Builder.
 		Select("codigo", "nome").
 		Column("COUNT(*) OVER() AS count").
-		From("aluno").
+		From("manager.aluno").
 		Where(
 			squirrel.Case().
 				When(squirrel.Eq{"nome": ""}, squirrel.Expr("true")).
@@ -71,7 +71,7 @@ func (r *PGStudent) UpdateStudent(student *StudentModel) (err error) {
 
 	if err = r.Db.Builder.
 		Select("COUNT(*) > 0").
-		From("aluno").
+		From("manager.aluno").
 		Where(squirrel.Eq{"codigo": student.Code}).
 		Scan(&exist); err != nil {
 		return
@@ -79,7 +79,7 @@ func (r *PGStudent) UpdateStudent(student *StudentModel) (err error) {
 
 	if exist {
 		if _, err = r.Db.Builder.
-			Update("aluno").
+			Update("manager.aluno").
 			Set("nome", student.Name).
 			Where(squirrel.Eq{"codigo": student.Code}).
 			Exec(); err != nil {

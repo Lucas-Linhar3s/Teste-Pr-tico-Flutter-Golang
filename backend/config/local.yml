@@ -1,24 +1,24 @@
 env: local
 http:
   #  host: 0.0.0.0
-  host: "127.0.0.1"
-  port: ":8000"
+  host: 127.0.0.1
+  port: :8000
 security:
   api_sign:
-    app_key: "1FdBcCeB78e04905b11F3E521097967D"
-    app_security: "f479fEe7fB8714aC1542a0a"
+    app_key: 1FdBcCeB78e04905b11F3E521097967D
+    app_security: f479fEe7fB8714aC1542a0a
   jwt:
     key: ""
 data:
   db:
     user:
       driver: postgres
-      nick: "postgres"
-      name: "postgres"
-      username: "postgres"
-      password: "dev123456"
-      hostname: "127.0.0.1"
-      port: "5432"
+      nick: postgres
+      name: postgres
+      username: postgres
+      password: dev123456
+      hostname: localhost
+      port: 5432
       max_conn: 5
       max_idle: 1
       transaction_timeout: 1
