@@ -10,7 +10,7 @@ services:
     ports:
       - 5441:5432
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
  
   backend:
     build:

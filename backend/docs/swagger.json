@@ -1,97 +1,181 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Esse e um teste pratico para a vaga Flutter/Golang da empresa VR SOFTWARE.",
+        "description": "Esse e um teste pratico para a vaga Flutter/Golang da empresa X.",
         "title": "TESTE PRATICO FLUTTER/GOLANG API",
+        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Vr Software"
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
         },
-        "version": "1.0"
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.1"
     },
-    "host": "localhost:3000",
-    "basePath": "/",
+    "host": "localhost:8000",
+    "basePath": "{{.BasePath}}",
     "paths": {
-        "/course/add-students": {
+        "/courses/add-students": {
             "post": {
-                "description": "Add students to a course.",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Add students to course",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "courses"
                 ],
-                "summary": "Add students to a course",
-                "operationId": "add-students",
+                "summary": "Add students to course",
                 "parameters": [
                     {
-                        "description": "Student information",
-                        "name": "student",
+                        "description": "Students and Course information",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.CreateCourseStudent"
+                            "type": "object",
+                            "$ref": "#/definitions/application.CourseStudentReq"
                         }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No content"
-                    }
-                }
-            }
-        },
-        "/course/create": {
-            "post": {
-                "description": "Create a new course with the provided data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Course"
-                ],
-                "summary": "Create a new course",
-                "operationId": "create-course",
-                "parameters": [
+                    },
                     {
-                        "description": "Course data to create",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dtos.CreateCourseRequestBody"
-                        }
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
+                    "201": {
+                        "description": "Student add successfully",
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
                     }
                 }
             }
         },
-        "/course/list": {
-            "get": {
-                "description": "Get a list of courses with pagination",
-                "consumes": [
-                    "application/json"
-                ],
+        "/courses/create": {
+            "post": {
+                "description": "Create new course",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "courses"
                 ],
-                "summary": "List courses",
-                "operationId": "list-courses",
+                "summary": "Create course",
+                "parameters": [
+                    {
+                        "description": "Course information",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/application.CourseReq"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Course created successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/list": {
+            "get": {
+                "description": "List all course",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "courses"
+                ],
+                "summary": "List all course",
                 "parameters": [
                     {
                         "type": "integer",
@@ -109,138 +193,294 @@
                     },
                     {
                         "type": "string",
-                        "description": "Search term",
-                        "name": "search",
+                        "description": "Course description",
+                        "name": "description",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "List of courses",
                         "schema": {
-                            "$ref": "#/definitions/course.Pagination"
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
             }
         },
-        "/course/list-students": {
+        "/courses/list-students-course": {
             "get": {
-                "description": "Get a list of students in a course",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "List all course students",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "courses"
                 ],
-                "summary": "List students in a course",
-                "operationId": "list-students-in-course",
+                "summary": "List all course students",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "Codigo do curso",
                         "name": "search",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "List of courses",
                         "schema": {
-                            "$ref": "#/definitions/course.ListStudentCourse"
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
             }
         },
-        "/course/update": {
+        "/courses/update": {
             "patch": {
-                "description": "Update an existing course with the provided data",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Update course",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "courses"
                 ],
-                "summary": "Update a course",
-                "operationId": "update-course",
+                "summary": "Update course",
                 "parameters": [
                     {
-                        "description": "Course data to update",
-                        "name": "input",
+                        "description": "Course information",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.UpdateCourseRequestBody"
+                            "type": "object",
+                            "$ref": "#/definitions/application.CourseReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
+                    "201": {
+                        "description": "Course updated successfully",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
             }
         },
-        "/student/create": {
+        "/students/create": {
             "post": {
-                "description": "Create a new student with the provided data",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Create new student",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "students"
                 ],
-                "summary": "Create a new student",
-                "operationId": "create-student",
+                "summary": "Create student",
                 "parameters": [
                     {
-                        "description": "Student data to create",
-                        "name": "input",
+                        "description": "Student information",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.CreateStudentRequestBody"
+                            "type": "object",
+                            "$ref": "#/definitions/application.StudentReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
+                    "201": {
+                        "description": "Student created successfully",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
             }
         },
-        "/student/list": {
+        "/students/list": {
             "get": {
-                "description": "Get a list of students with pagination",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "List all students",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "students"
                 ],
-                "summary": "List students",
-                "operationId": "list-students",
+                "summary": "List all students",
                 "parameters": [
                     {
                         "type": "integer",
@@ -258,51 +498,133 @@
                     },
                     {
                         "type": "string",
-                        "description": "Search term",
-                        "name": "search",
+                        "description": "Student name",
+                        "name": "name",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "List of students",
                         "schema": {
-                            "$ref": "#/definitions/student.Pagination"
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
             }
         },
-        "/student/update": {
+        "/students/update": {
             "patch": {
-                "description": "Update an existing student with the provided data",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Update student",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "students"
                 ],
-                "summary": "Update a student",
-                "operationId": "update-student",
+                "summary": "Update student",
                 "parameters": [
                     {
-                        "description": "Student data to update",
-                        "name": "input",
+                        "description": "Student information",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.UpdateStudentRequestBody"
+                            "type": "object",
+                            "$ref": "#/definitions/application.StudentReq"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Timestamp of the request",
+                        "name": "Timestamp",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Signature for the request",
+                        "name": "Sign",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Unique UUID for the request",
+                        "name": "Nonce",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API version",
+                        "name": "App-Version",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
+                    "201": {
+                        "description": "Student updated successfully",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/responses.Response"
                         }
                     }
                 }
@@ -310,66 +632,16 @@
         }
     },
     "definitions": {
-        "course.Course": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "ementa": {
-                    "type": "string"
-                }
-            }
-        },
-        "course.ListStudentCourse": {
-            "type": "object",
-            "properties": {
-                "student": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/course.Student"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "course.Pagination": {
-            "type": "object",
-            "properties": {
-                "courses": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/course.Course"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "course.Student": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "dtos.CreateCourseRequestBody": {
+        "application.CourseReq": {
             "type": "object",
             "required": [
                 "description",
                 "ementa"
             ],
             "properties": {
+                "code": {
+                    "type": "integer"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -378,7 +650,7 @@
                 }
             }
         },
-        "dtos.CreateCourseStudent": {
+        "application.CourseStudentReq": {
             "type": "object",
             "required": [
                 "code_course",
@@ -393,67 +665,40 @@
                 }
             }
         },
-        "dtos.CreateStudentRequestBody": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "dtos.UpdateCourseRequestBody": {
+        "application.StudentReq": {
             "type": "object",
             "required": [
-                "description",
-                "ementa"
+                "name"
             ],
             "properties": {
                 "code": {
                     "type": "integer"
                 },
-                "description": {
-                    "type": "string"
-                },
-                "ementa": {
-                    "type": "string"
-                }
-            }
-        },
-        "dtos.UpdateStudentRequestBody": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
                 "name": {
                     "type": "string"
                 }
             }
         },
-        "student.Pagination": {
-            "type": "object",
-            "properties": {
-                "students": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/student.Student"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "student.Student": {
+        "responses.Response": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
-                "name": {
+                "data": {
+                    "type": "object"
+                },
+                "message": {
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

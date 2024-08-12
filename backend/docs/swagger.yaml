@@ -1,41 +1,9 @@
-basePath: /
+basePath: '{{.BasePath}}'
 definitions:
-  course.Course:
+  application.CourseReq:
     properties:
       code:
         type: integer
-      description:
-        type: string
-      ementa:
-        type: string
-    type: object
-  course.ListStudentCourse:
-    properties:
-      student:
-        items:
-          $ref: '#/definitions/course.Student'
-        type: array
-      total:
-        type: integer
-    type: object
-  course.Pagination:
-    properties:
-      courses:
-        items:
-          $ref: '#/definitions/course.Course'
-        type: array
-      total:
-        type: integer
-    type: object
-  course.Student:
-    properties:
-      code:
-        type: integer
-      name:
-        type: string
-    type: object
-  dtos.CreateCourseRequestBody:
-    properties:
       description:
         type: string
       ementa:
@@ -44,7 +12,7 @@ definitions:
     - description
     - ementa
     type: object
-  dtos.CreateCourseStudent:
+  application.CourseStudentReq:
     properties:
       code_course:
         type: integer
@@ -54,104 +22,143 @@ definitions:
     - code_course
     - code_student
     type: object
-  dtos.CreateStudentRequestBody:
-    properties:
-      name:
-        type: string
-    type: object
-  dtos.UpdateCourseRequestBody:
+  application.StudentReq:
     properties:
       code:
         type: integer
-      description:
-        type: string
-      ementa:
+      name:
         type: string
     required:
-    - description
-    - ementa
+    - name
     type: object
-  dtos.UpdateStudentRequestBody:
+  responses.Response:
     properties:
       code:
         type: integer
-      name:
+      data:
+        type: object
+      message:
         type: string
     type: object
-  student.Pagination:
-    properties:
-      students:
-        items:
-          $ref: '#/definitions/student.Student'
-        type: array
-      total:
-        type: integer
-    type: object
-  student.Student:
-    properties:
-      code:
-        type: integer
-      name:
-        type: string
-    type: object
-host: localhost:3000
+host: localhost:8000
 info:
   contact:
-    name: Vr Software
-  description: Esse e um teste pratico para a vaga Flutter/Golang da empresa VR SOFTWARE.
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Esse e um teste pratico para a vaga Flutter/Golang da empresa X.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
   title: TESTE PRATICO FLUTTER/GOLANG API
-  version: "1.0"
+  version: 1.0.1
 paths:
-  /course/add-students:
+  /courses/add-students:
     post:
-      consumes:
-      - application/json
-      description: Add students to a course.
-      operationId: add-students
+      description: Add students to course
       parameters:
-      - description: Student information
+      - description: Students and Course information
         in: body
-        name: student
+        name: body
         required: true
         schema:
-          $ref: '#/definitions/dtos.CreateCourseStudent'
+          $ref: '#/definitions/application.CourseStudentReq'
+          type: object
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
+        type: string
       produces:
       - application/json
       responses:
-        "204":
-          description: No content
-      summary: Add students to a course
-      tags:
-      - Course
-  /course/create:
-    post:
-      consumes:
-      - application/json
-      description: Create a new course with the provided data
-      operationId: create-course
-      parameters:
-      - description: Course data to create
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/dtos.CreateCourseRequestBody'
-      produces:
-      - application/json
-      responses:
-        "204":
-          description: No Content
+        "201":
+          description: Student add successfully
           schema:
             type: string
-      summary: Create a new course
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: Add students to course
       tags:
-      - Course
-  /course/list:
-    get:
-      consumes:
+      - courses
+  /courses/create:
+    post:
+      description: Create new course
+      parameters:
+      - description: Course information
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/application.CourseReq'
+          type: object
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
+        type: string
+      produces:
       - application/json
-      description: Get a list of courses with pagination
-      operationId: list-courses
+      responses:
+        "201":
+          description: Course created successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: Create course
+      tags:
+      - courses
+  /courses/list:
+    get:
+      description: List all course
       parameters:
       - description: Limit the number of results (default is 10)
         in: query
@@ -163,94 +170,206 @@ paths:
         name: offset
         required: true
         type: integer
-      - description: Search term
+      - description: Course description
         in: query
-        name: search
+        name: description
+        type: string
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
         type: string
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of courses
           schema:
-            $ref: '#/definitions/course.Pagination'
-      summary: List courses
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: List all course
       tags:
-      - Course
-  /course/list-students:
+      - courses
+  /courses/list-students-course:
     get:
-      consumes:
-      - application/json
-      description: Get a list of students in a course
-      operationId: list-students-in-course
+      description: List all course students
       parameters:
       - description: Codigo do curso
         in: query
         name: search
         required: true
+        type: integer
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
         type: string
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of courses
           schema:
-            $ref: '#/definitions/course.ListStudentCourse'
-      summary: List students in a course
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: List all course students
       tags:
-      - Course
-  /course/update:
+      - courses
+  /courses/update:
     patch:
-      consumes:
-      - application/json
-      description: Update an existing course with the provided data
-      operationId: update-course
+      description: Update course
       parameters:
-      - description: Course data to update
+      - description: Course information
         in: body
-        name: input
+        name: body
         required: true
         schema:
-          $ref: '#/definitions/dtos.UpdateCourseRequestBody'
+          $ref: '#/definitions/application.CourseReq'
+          type: object
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
+        type: string
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "201":
+          description: Course updated successfully
           schema:
             type: string
-      summary: Update a course
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: Update course
       tags:
-      - Course
-  /student/create:
+      - courses
+  /students/create:
     post:
-      consumes:
-      - application/json
-      description: Create a new student with the provided data
-      operationId: create-student
+      description: Create new student
       parameters:
-      - description: Student data to create
+      - description: Student information
         in: body
-        name: input
+        name: body
         required: true
         schema:
-          $ref: '#/definitions/dtos.CreateStudentRequestBody'
+          $ref: '#/definitions/application.StudentReq'
+          type: object
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
+        type: string
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "201":
+          description: Student created successfully
           schema:
             type: string
-      summary: Create a new student
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: Create student
       tags:
-      - Student
-  /student/list:
+      - students
+  /students/list:
     get:
-      consumes:
-      - application/json
-      description: Get a list of students with pagination
-      operationId: list-students
+      description: List all students
       parameters:
       - description: Limit the number of results (default is 10)
         in: query
@@ -262,41 +381,105 @@ paths:
         name: offset
         required: true
         type: integer
-      - description: Search term
+      - description: Student name
         in: query
-        name: search
+        name: name
+        type: string
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
         type: string
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of students
           schema:
-            $ref: '#/definitions/student.Pagination'
-      summary: List students
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: List all students
       tags:
-      - Student
-  /student/update:
+      - students
+  /students/update:
     patch:
-      consumes:
-      - application/json
-      description: Update an existing student with the provided data
-      operationId: update-student
+      description: Update student
       parameters:
-      - description: Student data to update
+      - description: Student information
         in: body
-        name: input
+        name: body
         required: true
         schema:
-          $ref: '#/definitions/dtos.UpdateStudentRequestBody'
+          $ref: '#/definitions/application.StudentReq'
+          type: object
+      - description: Timestamp of the request
+        in: header
+        name: Timestamp
+        required: true
+        type: string
+      - description: Signature for the request
+        in: header
+        name: Sign
+        required: true
+        type: string
+      - description: Unique UUID for the request
+        in: header
+        name: Nonce
+        required: true
+        type: string
+      - description: API version
+        in: header
+        name: App-Version
+        required: true
+        type: string
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "201":
+          description: Student updated successfully
           schema:
             type: string
-      summary: Update a student
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.Response'
+            type: object
+      summary: Update student
       tags:
-      - Student
+      - students
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
