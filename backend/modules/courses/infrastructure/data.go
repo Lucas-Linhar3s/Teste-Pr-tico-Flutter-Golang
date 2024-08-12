@@ -18,7 +18,7 @@ type PGCourse struct {
 // CreateCourse creates a new course
 func (r *PGCourse) CreateCourse(course *CourseModel) (err error) {
 	if _, err = r.Db.Builder.
-		Insert("curso").
+		Insert("manager.curso").
 		Columns("descricao", "ementa").
 		Values(course.Description, course.Ementa).
 		Exec(); err != nil {
@@ -35,7 +35,7 @@ func (r *PGCourse) AddStudents(courseStudent *CourseModel) (err error) {
 	// Verifica se o aluno já está matriculado em 3 cursos
 	if err = r.Db.Builder.
 		Select("COUNT(*)").
-		From("curso_aluno").
+		From("manager.curso_aluno").
 		Where(squirrel.Eq{"codigo_aluno": courseStudent.StudentCode}).
 		Scan(&courntStudent); err != nil {
 		return err
@@ -48,7 +48,7 @@ func (r *PGCourse) AddStudents(courseStudent *CourseModel) (err error) {
 	// Verifica se o curso já atingiu o limite de 10 alunos matriculados
 	if err = r.Db.Builder.
 		Select("COUNT(*)").
-		From("curso_aluno").
+		From("manager.curso_aluno").
 		Where(squirrel.Eq{"codigo_curso": courseStudent.Code}).
 		Scan(&countCourse); err != nil {
 		return err
@@ -60,7 +60,7 @@ func (r *PGCourse) AddStudents(courseStudent *CourseModel) (err error) {
 
 	// Cria o relacionamento entre o curso e o aluno
 	if _, err = r.Db.Builder.
-		Insert("curso_aluno").
+		Insert("manager.curso_aluno").
 		Columns("codigo_curso", "codigo_aluno").
 		Values(courseStudent.Code, courseStudent.StudentCode).
 		Exec(); err != nil {
@@ -81,7 +81,7 @@ func (r *PGCourse) ListCourses(params map[string]interface{}) (pagination *[]Cou
 	if rows, err = r.Db.Builder.
 		Select("codigo", "descricao", "ementa").
 		Column("COUNT(*) OVER() AS count").
-		From("curso").
+		From("manager.curso").
 		Where(
 			squirrel.Case().
 				When(squirrel.Eq{"descricao": ""}, squirrel.Expr("true")).
@@ -114,8 +114,8 @@ func (r *PGCourse) ListCoursesStudents(params map[string]interface{}) (paginatio
 	if rows, err = r.Db.Builder.
 		Select("s.codigo", "s.nome").
 		Column("COUNT(*) OVER() AS count").
-		From("curso_aluno ca").
-		Join("aluno s ON s.codigo = ca.codigo_aluno").
+		From("manager.curso_aluno ca").
+		Join("manager.aluno s ON s.codigo = ca.codigo_aluno").
 		Where(
 			squirrel.Eq{"ca.codigo_curso::INTEGER": params["code"]},
 		).
@@ -141,7 +141,7 @@ func (r *PGCourse) UpdateCourse(course *CourseModel) (err error) {
 
 	if err = r.Db.Builder.
 		Select("COUNT(*) > 0").
-		From("curso").
+		From("manager.curso").
 		Where(squirrel.Eq{"codigo": course.Code}).
 		Scan(&exist); err != nil {
 		return
@@ -149,7 +149,7 @@ func (r *PGCourse) UpdateCourse(course *CourseModel) (err error) {
 
 	if exist {
 		if _, err = r.Db.Builder.
-			Update("curso").
+			Update("manager.curso").
 			Set("descricao", course.Description).
 			Set("ementa", course.Ementa).
 			Where(squirrel.Eq{"codigo": course.Code}).
