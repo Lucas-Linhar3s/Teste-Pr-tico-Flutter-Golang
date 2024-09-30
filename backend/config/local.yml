@@ -11,6 +11,9 @@ security:
     key: ""
 data:
   db:
+    # user:
+      # driver: sqlite3
+      # dsn: ""
     user:
       driver: postgres
       nick: postgres

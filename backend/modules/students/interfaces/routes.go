@@ -1,54 +1,22 @@
 package interfaces
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
-	"go.uber.org/dig"
 
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/middleware"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/http/server"
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
 
-type routesDependencies struct {
-	dig.In
-	Handler *StudentHandler `name:"STUDENTS_HANDLER"`
-}
-
-func Routes(container *dig.Container) []server.Route {
-	var dep routesDependencies
-
-	if err := container.Invoke(func(h routesDependencies) {
-		dep = h
-	}); err != nil {
-		panic(fmt.Sprintf("failed to invoke dependencies module STUDENTS: %s", err))
-
+func Routes(logger *log.Logger, r *server.Server, handler *StudentHandler) []gin.IRoutes {
+	group := r.Router.Group("/students")
+	group.Use(
+		middleware.CORSMiddleware(),
+		middleware.RequestLogMiddleware(logger),
+	)
+	return []gin.IRoutes{
+		group.POST("/create", handler.CreateStudent),
+		group.GET("/list", handler.ListStudents),
+		group.PATCH("/update", handler.UpdateStudent),
 	}
-
-	return []server.Route{
-		{
-			Method:      "POST",
-			Path:        "/create",
-			Handler:     dep.Handler.CreateStudent,
-			Description: "Create a new student",
-			Middlewares: middlewares(),
-		},
-		{
-			Method:      "GET",
-			Path:        "/list",
-			Handler:     dep.Handler.ListStudents,
-			Description: "List students",
-			Middlewares: nil,
-		},
-		{
-			Method:      "PATCH",
-			Path:        "/update",
-			Handler:     dep.Handler.UpdateStudent,
-			Description: "Update a student",
-			Middlewares: middlewares(),
-		},
-	}
-}
-
-func middlewares() []gin.HandlerFunc {
-	return []gin.HandlerFunc{}
 }

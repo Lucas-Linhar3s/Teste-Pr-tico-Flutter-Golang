@@ -1,24 +1,12 @@
 package main
 
 import (
-	d "go.uber.org/dig"
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/di"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/config"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/dig"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/http/server"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/jwt"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
-
-type dependencies struct {
-	d.In
-	Log        *log.Logger    `name:"LOGGER"`
-	HTTPServer *server.Server `name:"SERVER"`
-	JWT        *jwt.JWT       `name:"JWT"`
-	Config     *config.Config `name:"CONFIG"`
-}
 
 // @title TESTE PRATICO FLUTTER/GOLANG API
 // @version 1.0.1
@@ -36,23 +24,15 @@ type dependencies struct {
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	var err error
-	var dep *dependencies
-	container := dig.BuildContainer()
-
-	if err = di.RegisterDI(container); err != nil {
+	app, cleanUp, err := di.Initialize()
+	if err != nil {
 		panic(err)
 	}
+	defer cleanUp()
 
-	if dep, err = dig.InvokeService(container, dep); err != nil {
-		panic(err)
-	}
-
-	if err := dig.ResgisterModules(container, dep.HTTPServer.Router, dep.Log, dep.Config); err != nil {
-		dep.Log.Logger.Fatal("error in resgister modules", zap.Error(err))
-	}
-
-	if err = dep.HTTPServer.Run(dep.Log, dep.JWT, dep.Config); err != nil {
-		dep.Log.Logger.Fatal("error in init server", zap.Error(err))
+	app.Logger.Info("server start", zap.String("host", fmt.Sprintf("http://%s%s", app.Config.Http.Host, app.Config.Http.Port)))
+	app.Logger.Info("docs addr", zap.String("addr", fmt.Sprintf("http://%s%s/swagger/index.html", app.Config.Http.Host, app.Config.Http.Port)))
+	if err = app.Server.Run(app.Config); err != nil {
+		app.Logger.Fatal("error in init server", zap.Error(err))
 	}
 }

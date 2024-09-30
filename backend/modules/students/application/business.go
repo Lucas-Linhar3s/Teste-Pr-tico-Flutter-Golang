@@ -3,34 +3,30 @@ package application
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/jinzhu/copier"
-	"go.uber.org/dig"
 	"go.uber.org/zap"
 
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/students/domain"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/utils"
 )
-
-type appDependencies struct {
-	dig.In
-	Service  *domain.Service     `name:"STUDENTS_SERVICE"`
-	Logger   *log.Logger         `name:"LOGGER"`
-	Validate *validator.Validate `name:"VALIDATE"`
-}
 
 // StudentApp application
 type StudentApp struct {
-	validate *validator.Validate
 	logger   *log.Logger
-	service  *domain.Service
+	validate *validator.Validate
+	db       *database.Database
 }
 
 // NewApplication new application
-func NewApplication(dep appDependencies) *StudentApp {
+func NewApplication(
+	logger *log.Logger,
+	db *database.Database,
+) *StudentApp {
 	return &StudentApp{
-		validate: dep.Validate,
-		logger:   dep.Logger,
-		service:  dep.Service,
+		validate: validator.New(),
+		logger:   logger,
+		db:       db,
 	}
 }
 
@@ -38,18 +34,34 @@ func NewApplication(dep appDependencies) *StudentApp {
 func (app *StudentApp) CreateStudent(ctx *gin.Context, req StudentReq) (err error) {
 	const msg = "Error creating student"
 
+	tx, err := app.db.NewTransaction()
+	if err != nil {
+		app.logger.Error(msg, zap.Error(err))
+		return
+	}
+	defer tx.Close()
+
+	var (
+		service = domain.GetService(domain.GetRepository(tx))
+	)
+
 	if err = app.validate.Struct(req); err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
 
-	data, err := convertRequestToModel[domain.StudentModel](req)
+	data, err := utils.ConvertRequestToModel[domain.StudentModel](req)
 	if err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
 
-	if err = app.service.CreateStudent(&data); err != nil {
+	if err = service.CreateStudent(&data); err != nil {
+		app.logger.Error(msg, zap.Error(err))
+		return
+	}
+
+	if err = tx.Commit(); err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
@@ -61,18 +73,34 @@ func (app *StudentApp) CreateStudent(ctx *gin.Context, req StudentReq) (err erro
 func (app *StudentApp) UpdateStudent(ctx *gin.Context, req StudentReq) (err error) {
 	const msg = "Error updating student"
 
+	tx, err := app.db.NewTransaction()
+	if err != nil {
+		app.logger.Error(msg, zap.Error(err))
+		return
+	}
+	defer tx.Close()
+
+	var (
+		service = domain.GetService(domain.GetRepository(tx))
+	)
+
 	if err = app.validate.Struct(req); err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
 
-	data, err := convertRequestToModel[domain.StudentModel](req)
+	data, err := utils.ConvertRequestToModel[domain.StudentModel](req)
 	if err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
 
-	if err = app.service.UpdateStudent(&data); err != nil {
+	if err = service.UpdateStudent(&data); err != nil {
+		app.logger.Error(msg, zap.Error(err))
+		return
+	}
+
+	if err = tx.Commit(); err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
 	}
@@ -83,6 +111,17 @@ func (app *StudentApp) UpdateStudent(ctx *gin.Context, req StudentReq) (err erro
 // ListStudents lists all students
 func (app *StudentApp) ListStudents(ctx *gin.Context, req Params) (pagination *Res, err error) {
 	const msg = "Error listing students"
+
+	tx, err := app.db.NewTransaction()
+	if err != nil {
+		app.logger.Error(msg, zap.Error(err))
+		return
+	}
+	defer tx.Close()
+
+	var (
+		service = domain.GetService(domain.GetRepository(tx))
+	)
 
 	if err = app.validate.Struct(req); err != nil {
 		app.logger.Error(msg, zap.Error(err))
@@ -95,7 +134,7 @@ func (app *StudentApp) ListStudents(ctx *gin.Context, req Params) (pagination *R
 		"offset": *req.Offset,
 	}
 
-	data, err := app.service.ListStudents(paramsSearch)
+	data, err := service.ListStudents(paramsSearch)
 	if err != nil {
 		app.logger.Error(msg, zap.Error(err))
 		return
@@ -104,7 +143,7 @@ func (app *StudentApp) ListStudents(ctx *gin.Context, req Params) (pagination *R
 	pagination = &Res{}
 	for _, v := range *data {
 		var student StudentRes
-		student, err = convertRequestToModel[StudentRes](v)
+		student, err = utils.ConvertRequestToModel[StudentRes](v)
 		if err != nil {
 			app.logger.Error(msg, zap.Error(err))
 			return
@@ -114,12 +153,4 @@ func (app *StudentApp) ListStudents(ctx *gin.Context, req Params) (pagination *R
 	}
 
 	return
-}
-
-func convertRequestToModel[T any](req interface{}) (T, error) {
-	var data T
-	if err := copier.Copy(&data, req); err != nil {
-		return data, err
-	}
-	return data, nil
 }

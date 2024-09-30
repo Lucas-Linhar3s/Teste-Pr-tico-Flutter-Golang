@@ -4,24 +4,18 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/dig"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/students/application"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/http/responses"
 )
 
-type handlerDependencies struct {
-	dig.In
-	App *application.StudentApp `name:"STUDENTS_APP"`
-}
-
 type StudentHandler struct {
 	app *application.StudentApp
 }
 
-func NewHander(dep handlerDependencies) *StudentHandler {
+func NewHander(app *application.StudentApp) *StudentHandler {
 	return &StudentHandler{
-		app: dep.App,
+		app: app,
 	}
 }
 

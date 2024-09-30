@@ -1,47 +1,29 @@
 package courses
 
 import (
-	"go.uber.org/dig"
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+	"github.com/google/wire"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/application"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/domain"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/modules/courses/interfaces"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/http/server"
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
 
-type dependenciesModel struct {
-	Constructor interface{}
-	Token       string
+var ExampleModuleSet = wire.NewSet(
+	application.NewApplication,
+	interfaces.NewHander,
+	ModuleRegister,
+)
+
+type Module struct {
+	Routes []gin.IRoutes
 }
 
-var dependencies = []dependenciesModel{
-	{
-		Constructor: domain.GetRepository,
-		Token:       "COURSES_REPOSITORY",
-	},
-	{
-		Constructor: domain.GetService,
-		Token:       "COURSES_SERVICE",
-	},
-	{
-		Constructor: application.NewApplication,
-		Token:       "COURSES_APP",
-	},
-	{
-		Constructor: interfaces.NewHander,
-		Token:       "COURSES_HANDLER",
-	},
-}
-
-// Module binds all modules to the container
-func Module(container *dig.Container) *server.Module {
-	for _, v := range dependencies {
-		if err := container.Provide(v.Constructor, dig.Name(v.Token)); err != nil {
-
-		}
-	}
-	return &server.Module{
-		Group:  "courses",
-		Routes: interfaces.Routes(container),
+func ModuleRegister(logger *log.Logger, r *server.Server, handler *interfaces.CourseHandler) *Module {
+	validator.New()
+	return &Module{
+		Routes: interfaces.Routes(logger, r, handler),
 	}
 }

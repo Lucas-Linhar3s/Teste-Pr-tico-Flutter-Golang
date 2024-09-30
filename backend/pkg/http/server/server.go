@@ -7,8 +7,6 @@ import (
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/docs"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/config"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/jwt"
-	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
 
 // Server http server
@@ -24,8 +22,8 @@ func NewServer() *Server {
 }
 
 // // Run server
-func (s *Server) Run(logger *log.Logger,
-	jwt *jwt.JWT, conf *config.Config) error {
+func (s *Server) Run(
+	conf *config.Config) error {
 	// swagger doc
 	docs.SwaggerInfo.BasePath = "/"
 	// docs
@@ -37,5 +35,6 @@ func (s *Server) Run(logger *log.Logger,
 	s.Router.NoRoute(func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found " + " : " + c.Request.URL.String()})
 	})
+
 	return s.Router.Run(conf.Http.Port)
 }

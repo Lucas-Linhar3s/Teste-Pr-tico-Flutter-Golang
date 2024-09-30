@@ -1,20 +1,8 @@
 package domain
 
 import (
-	"go.uber.org/dig"
-
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/database"
 )
-
-type serviceDependencies struct {
-	dig.In
-	Repo ICourses `name:"COURSES_REPOSITORY"`
-}
-
-type repositoryDependencies struct {
-	dig.In
-	Database *database.Database `name:"DATABASE"`
-}
 
 // Service struct
 type Service struct {
@@ -22,13 +10,13 @@ type Service struct {
 }
 
 // GetService is a factory method
-func GetService(dep serviceDependencies) *Service {
-	return &Service{iCourse: dep.Repo}
+func GetService(repo ICourses) *Service {
+	return &Service{iCourse: repo}
 }
 
 // GetRepository is a factory method
-func GetRepository(dep repositoryDependencies) ICourses {
-	return newRepository(dep.Database)
+func GetRepository(db *database.Database) ICourses {
+	return newRepository(db)
 }
 
 // CreateCourse creates a new course

@@ -8,15 +8,9 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"go.uber.org/dig"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/config"
 )
-
-type jwtDependencies struct {
-	dig.In
-	Config *config.Config `name:"CONFIG"`
-}
 
 // JWT represents the jwt configuration of the application.
 type JWT struct {
@@ -30,8 +24,8 @@ type MyCustomClaims struct {
 }
 
 // NewJwt returns a new JWT instance.
-func NewJwt(dep jwtDependencies) *JWT {
-	key, err := json.Marshal(dep.Config.Security.Jwt.Key)
+func NewJwt(config *config.Config) *JWT {
+	key, err := json.Marshal(config.Security.Jwt.Key)
 	if err != nil {
 		panic(err)
 	}

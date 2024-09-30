@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"errors"
 	"os"
 	"path/filepath"
 	"time"
@@ -10,29 +11,23 @@ import (
 	"github.com/jackc/pgx"
 	"github.com/jackc/pgx/stdlib"
 	_ "github.com/mattn/go-sqlite3"
-	"go.uber.org/dig"
 	"go.uber.org/zap"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/config"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
 
-type datbaseDependencies struct {
-	dig.In
-	Config *config.Config `name:"CONFIG"`
-	Logger *log.Logger    `name:"LOGGER"`
-}
-
 type Database struct {
+	tx                 *sql.Tx
 	db                 *sql.DB
 	transactionTimeout int
 	Builder            sq.StatementBuilderType
 }
 
-func NewDatabase(dep datbaseDependencies) *Database {
-	db, err := open(dep.Config)
+func NewDatabase(config *config.Config, logger *log.Logger) *Database {
+	db, err := open(config)
 	if err != nil {
-		dep.Logger.Fatal("failed to open database", zap.Error(err))
+		logger.Fatal("failed to open database", zap.Error(err))
 	}
 
 	return db
@@ -41,12 +36,29 @@ func NewDatabase(dep datbaseDependencies) *Database {
 func open(c *config.Config) (database *Database, err error) {
 	var db *sql.DB
 
-	if c.Data.Db.User.Driver == "mysql" || c.Data.Db.User.Driver == "postgres" {
+	switch c.Data.Db.User.Driver {
+	case "sqlite":
+		currentDir, err := os.Getwd()
+		if err != nil {
+			return nil, err
+		}
+		path := filepath.Join(currentDir, "", c.Data.Db.User.Dsn)
+
+		// Verifica se o arquivo do banco de dados existe
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			return nil, errors.New("banco de dados sqlite não encontrado")
+		}
+
+		db, err = sql.Open("sqlite3", path)
+		if err != nil {
+			return nil, err
+		}
+	case "postgres", "mysql":
 		driverConfig := stdlib.DriverConfig{
 			ConnConfig: pgx.ConnConfig{
 				RuntimeParams: map[string]string{
 					//Verificar
-					"application_name": "github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend",
+					"application_name": "github.com/Lucas-Linhar3s/Base-Structure-Golang",
 					"DateStyle":        "ISO",
 					"IntervalStyle":    "iso_8601",
 					// TODO:
@@ -71,33 +83,8 @@ func open(c *config.Config) (database *Database, err error) {
 		if err != nil {
 			return nil, err
 		}
-	} else if c.Data.Db.User.Driver == "sqlite" {
-		currentDir, err := os.Getwd()
-		if err != nil {
-			return nil, err
-		}
-		path := filepath.Join(currentDir, "", c.Data.Db.User.Dsn)
-
-		// Verifica se o arquivo do banco de dados existe
-		if _, err := os.Stat(path); os.IsNotExist(err) {
-			// Cria o arquivo do banco de dados
-			_, err = os.Create(path)
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		db, err = sql.Open("sqlite3", path)
-		if err != nil {
-			return nil, err
-		}
-
-	} else {
+	default:
 		panic("unknown db driver")
-	}
-
-	if err = createTables(db); err != nil {
-		return nil, err
 	}
 
 	if err := db.Ping(); err != nil {
@@ -112,6 +99,17 @@ func open(c *config.Config) (database *Database, err error) {
 		db:                 db,
 		transactionTimeout: c.Data.Db.User.TransactionTimeout,
 		Builder:            sq.StatementBuilder.PlaceholderFormat(sq.Dollar).RunWith(db),
+	}, nil
+}
+
+func (d *Database) NewTransaction() (*Database, error) {
+	tx, err := d.db.Begin()
+	if err != nil {
+		return nil, err
+	}
+	return &Database{
+		tx:      tx,
+		Builder: sq.StatementBuilder.PlaceholderFormat(sq.Dollar).RunWith(tx),
 	}, nil
 }
 
@@ -140,7 +138,11 @@ func createTables(db *sql.DB) error {
 }
 
 func (p *Database) Close() {
-	if p.db != nil {
-		p.db.Close()
+	if p.tx != nil {
+		p.tx.Rollback()
 	}
+}
+
+func (p *Database) Commit() error {
+	return p.tx.Commit()
 }

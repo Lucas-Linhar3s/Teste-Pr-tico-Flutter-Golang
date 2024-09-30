@@ -1,68 +1,24 @@
 package interfaces
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
-	"go.uber.org/dig"
 
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/middleware"
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/http/server"
+	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/log"
 )
 
-type routesDependencies struct {
-	dig.In
-	Handler *CourseHandler `name:"COURSES_HANDLER"`
-}
-
-func Routes(container *dig.Container) []server.Route {
-	var dep routesDependencies
-
-	if err := container.Invoke(func(h routesDependencies) {
-		dep = h
-	}); err != nil {
-		panic(fmt.Sprintf("failed to invoke dependencies module STUDENTS: %s", err))
-
+func Routes(logger *log.Logger, r *server.Server, handler *CourseHandler) []gin.IRoutes {
+	group := r.Router.Group("/courses")
+	group.Use(
+		middleware.CORSMiddleware(),
+		middleware.RequestLogMiddleware(logger),
+	)
+	return []gin.IRoutes{
+		group.POST("/create", handler.CreateCourse),
+		group.GET("/list", handler.ListCourses),
+		group.GET("/list-students-course", handler.ListStudentsCourse),
+		group.PATCH("/update", handler.UpdateCourse),
+		group.POST("/add-students", handler.AddStudents),
 	}
-
-	return []server.Route{
-		{
-			Method:      "POST",
-			Path:        "/create",
-			Handler:     dep.Handler.CreateCourse,
-			Description: "Create a new course",
-			Middlewares: middlewares(),
-		},
-		{
-			Method:      "GET",
-			Path:        "/list",
-			Handler:     dep.Handler.ListCourses,
-			Description: "List courses",
-			Middlewares: nil,
-		},
-		{
-			Method:      "GET",
-			Path:        "/list-students-course",
-			Handler:     dep.Handler.ListStudentsCourse,
-			Description: "List students by course",
-			Middlewares: nil,
-		},
-		{
-			Method:      "PATCH",
-			Path:        "/update",
-			Handler:     dep.Handler.UpdateCourse,
-			Description: "Update a course",
-			Middlewares: middlewares(),
-		},
-		{
-			Method:      "POST",
-			Path:        "/add-students",
-			Handler:     dep.Handler.AddStudents,
-			Description: "Add students to a course",
-			Middlewares: middlewares(),
-		},
-	}
-}
-
-func middlewares() []gin.HandlerFunc {
-	return []gin.HandlerFunc{}
 }

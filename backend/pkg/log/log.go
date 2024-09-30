@@ -6,18 +6,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/dig"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/Lucas-Linhar3s/Teste-Pratico-Flutter-Golang/backend/pkg/config"
 )
-
-type logDependencies struct {
-	dig.In
-	Config *config.Config `name:"CONFIG"`
-}
 
 const ctxLoggerKey = "zapLogger"
 
@@ -27,10 +21,10 @@ type Logger struct {
 }
 
 // NewLog new logger instance
-func NewLog(dep logDependencies) *Logger {
+func NewLog(config *config.Config) *Logger {
 	// log address "out.log" User-defined
-	lp := dep.Config.Log.LogFileName
-	lv := dep.Config.Log.LogLevel
+	lp := config.Log.LogFileName
+	lv := config.Log.LogLevel
 	var level zapcore.Level
 	//debug<info<warn<error<fatal<panic
 	switch lv {
@@ -46,15 +40,15 @@ func NewLog(dep logDependencies) *Logger {
 		level = zap.InfoLevel
 	}
 	hook := lumberjack.Logger{
-		Filename:   lp,                        // Log file path
-		MaxSize:    dep.Config.Log.MaxSize,    // Maximum size unit for each log file: M
-		MaxBackups: dep.Config.Log.MaxBackups, // The maximum number of backups that can be saved for log files
-		MaxAge:     dep.Config.Log.MaxAge,     // Maximum number of days the file can be saved
-		Compress:   dep.Config.Log.Compress,   // Compression or not
+		Filename:   lp,                    // Log file path
+		MaxSize:    config.Log.MaxSize,    // Maximum size unit for each log file: M
+		MaxBackups: config.Log.MaxBackups, // The maximum number of backups that can be saved for log files
+		MaxAge:     config.Log.MaxAge,     // Maximum number of days the file can be saved
+		Compress:   config.Log.Compress,   // Compression or not
 	}
 
 	var encoder zapcore.Encoder
-	if dep.Config.Log.Encoding == "console" {
+	if config.Log.Encoding == "console" {
 		encoder = zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
 			TimeKey:        "ts",
 			LevelKey:       "level",
@@ -89,7 +83,7 @@ func NewLog(dep logDependencies) *Logger {
 		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&hook)), // Print to console and file
 		level,
 	)
-	if dep.Config.Env != "prod" {
+	if config.Env != "prod" {
 		return &Logger{zap.New(core, zap.Development(), zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))}
 	}
 	return &Logger{zap.New(core, zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))}
